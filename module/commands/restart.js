@@ -11,13 +11,11 @@ module.exports.config = {
 
 module.exports.run = function ({ api, event }) {
     api.sendMessage("বট রিস্টার্ট হচ্ছে...", event.threadID, () => {
-        // নতুন প্রসেস শুরু করা
         spawn("node", ["index.js"], {
             stdio: "inherit",
             detached: true,
         }).unref();
 
-        // বর্তমান প্রসেস বন্ধ করা
         process.exit(0);
     });
 };
