@@ -64,7 +64,8 @@ module.exports.run = async ({ api, event }) => {
   const totalCommands = getTotalCommands();
   const ping = await getPing().catch(() => '0.00 ms');  // Handling the case when ping fails
 
-  const message = `
+  const message = {
+      body: `
 ╭━━〔 🌐 𝗦𝗘𝗥𝗩𝗘𝗥 𝗜𝗡𝗙𝗢 〕━━╮
 ┣ 🕒 𝗣𝗿𝗼𝗷𝗲𝗰𝘁 𝗨𝗽𝘁𝗶𝗺𝗲:  
 ┃   ⌛ ${projectUptime}
@@ -73,7 +74,7 @@ module.exports.run = async ({ api, event }) => {
 ┣ 📡 𝗣𝗶𝗻𝗴: ${ping}
 ╰━━━━━━━━━━━━━━━━━━━╯
 
-╭━━━〔 💻 𝗢𝗦 𝗜𝗡𝗙𝗢 〕━━━╮
+╭━━━〔 💻 𝗢𝗦 𝗜𝗡𝗙𝗢 〕━━━━╮
 ┣ 🏗️ 𝗔𝗿𝗰𝗵𝗶𝘁𝗲𝗰𝘁𝘂𝗿𝗲: ${arch}
 ┣ 🖥️ 𝗣𝗹𝗮𝘁𝗳𝗼𝗿𝗺: ${platform}
 ┣ 🗓️ 𝗥𝗲𝗹𝗲𝗮𝘀𝗲: ${release}
@@ -82,7 +83,9 @@ module.exports.run = async ({ api, event }) => {
 ╭━〔 🛠️ 𝗠𝗘𝗠𝗢𝗥𝗬 𝗜𝗡𝗙𝗢 〕━━╮
 ┣ 💾 𝗙𝗿𝗲𝗲: ${freeMem} 𝗚𝗕
 ┣ 📊 𝗨𝘀𝗮𝗴𝗲: ${usedMem} / ${totalMem} 𝗚𝗕
-╰━━━━━━━━━━━━━━━━━━━╯`;
+╰━━━━━━━━━━━━━━━━━━━╯`,
+attachment: fs.createReadStream(__dirname + `/cache/os.png`)
+  };
 
   api.sendMessage(message, event.threadID);
 };
